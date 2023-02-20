@@ -1,21 +1,21 @@
-# nodejs-rest-api-demo
->Node.js REST Api demo
+# Node.js REST API Example
 
+From now on, you can add all your favorite directors to your own special database!
+  <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f3a5.png?v8" width="30" title="hover text">
+  <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f47b.png?v8" width="30" title="hover text">
 
-## base url
-```
-https://nodejs-rest-api-demo-app.herokuapp.com/
-```
 
 ## endpoints
-- GET /api/v1/director - returns all director
-- GET /api/v1/director/<id> - returns the spesific director
-- POST /api/v1/director - creates a new director
-- PUT /api/v1/director/<id>  - update existing director. Director data should be placed on the request body
-- DELETE /api/v1/director/<id> - deletes the specified director
 
-##  - example /api/v1/director response
-```JSON 
+-   GET /api/v1/director - returns all director
+-   GET /api/v1/director/:id - returns the specific director
+-   POST /api/v1/director - creates a new director
+-   PUT /api/v1/director/:id - updates existing director. Director data should be placed on the request body
+-   DELETE /api/v1/director/:id - deletes the specified director
+
+## sample /api/v1/director response
+
+```JSON
 [
     {
         "id": 12,
@@ -50,6 +50,31 @@ https://nodejs-rest-api-demo-app.herokuapp.com/
 ]
 ```
 
+## package installation
+
+```
+npm i
+```
+
+or
+
+```
+npm install
+```
+
+## migrating mysql database
+
+```
+npm run migrate
+```
+
+## running on dev mode
+
+```
+npm run dev
+```
+
 ## TODOs - implementations
-- Redis will be implemented for caching.
-- Unit tests
+
+-   Redis will be developed for caching.
+-   Unit tests will be developed
