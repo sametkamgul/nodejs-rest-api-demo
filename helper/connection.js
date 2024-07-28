@@ -3,10 +3,10 @@ var kerevizlog = require("kerevizlog");
 
 var kLogger = new kerevizlog();
 
-const sequelize = new Sequelize("directors_db", "root", "root", {
-    dialect: "mysql",
+const sequelize = new Sequelize("director", "sametkamgul", "123", {
+    dialect: "postgres",
     host: "localhost",
-    port: "8889",
+    port: "5432",
     logging: false,
 });
 

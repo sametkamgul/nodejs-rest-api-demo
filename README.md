@@ -62,7 +62,7 @@ or
 npm install
 ```
 
-## migrating mysql database
+## inserting postgresql database
 
 ```
 npm run migrate

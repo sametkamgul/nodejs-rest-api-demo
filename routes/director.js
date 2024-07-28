@@ -6,64 +6,82 @@ const directorController = require("../controller/directorController");
 const { logging } = require("../middleware/logger");
 
 router.get("/", logging, async (req, res) => {
-    const result = await directorController.getDirectors();
+  try {
+    const directors = await directorController.getDirectors();
 
-    if (result.directors) {
-        res.status(result.response.status).json(result.directors);
-    } else {
-        res.status(result.response.status).json(result.response.text);
-    }
+    res.status(200).json(directors);
+  } catch (error) {
+    res.status(500).json({ error: error?.message || "internal server error" });
+  }
 });
 
 router.get("/:id", logging, async (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    const result = await directorController.getDirector(id);
+  try {
+    const director = await directorController.getDirector(id);
 
-    if (result.director != null) {
-        res.status(result.response.status).json(result.director);
-    } else {
-        res.status(result.response.status).json(result.response.text);
+    if (!director) {
+      return res.status(404).json({ error: "not found" });
     }
+
+    res.status(200).json(director);
+  } catch (error) {
+    res.status(500).json({ error: error?.message || "internal server error" });
+  }
 });
 
 router.post("/", logging, async (req, res) => {
-    var director = {};
-    var responseMessage;
+  directorParams = req.body;
 
-    if (
-        req.body.name &&
-        req.body.surname &&
-        req.body.gender &&
-        req.body.age &&
-        req.body.maritalStatus
-    ) {
-        director = req.body;
+  try {
+    const existingDirector = await directorController.getDirector(
+      null,
+      directorParams.name,
+      directorParams.surname
+    );
 
-        responseMessage = await directorController.insertDirector(director);
+    if (existingDirector) {
+      return res.status(200).json(existingDirector);
     }
 
-    res.status(responseMessage.status).json(responseMessage.text);
+    const director = await directorController.insertDirector(directorParams);
+
+    res.status(201).json(director);
+  } catch (error) {
+    res.status(500).json({ error: error?.message || "internal server error" });
+  }
 });
 
 router.delete("/:id", logging, async (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    var result = await directorController.deleteDirector(id);
+  try {
+    const director = await directorController.getDirector(id);
+    if (!director) {
+      return res.status(404).json({ error: `id: ${id} is not found` });
+    }
 
-    res.status(result.status).json(result.text);
+    await directorController.deleteDirector(id);
+
+    res.status(200).json({ message: `id: ${id} is deleted!` });
+  } catch (error) {
+    res.status(404).json({ error: error?.message });
+  }
 });
 
 router.put("/", logging, async (req, res) => {
-    const director = req.body;
+  const director = req.body;
 
-    var result = await directorController.updateDirector(director);
+  try {
+    const updatedDirector = await directorController.updateDirector(director);
 
-    if (result.director) {
-        res.status(result.response.status).json(result.response.director);
-    } else {
-        res.status(result.response.status).json(result.response.text);
+    if (updatedDirector) {
+      return res.status(200).json(updatedDirector);
     }
+  } catch (error) {
+    res.status(404).json({ error: error?.message });
+  }
 });
 
 module.exports = router;

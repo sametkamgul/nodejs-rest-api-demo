@@ -6,20 +6,9 @@ var DirectorModel = require("../model/Director");
  * @return {Array} - Array of Objects(Director model object)
  */
 async function getDirectors() {
-    var response = {
-        status: 404,
-        text: {
-            message: "The item does not exist",
-        },
-    };
+  const directors = await DirectorModel.findAll();
 
-    const directors = await DirectorModel.findAll();
-
-    if (directors.length > 0) {
-        response.status = 200;
-    }
-
-    return { directors, response };
+  return directors;
 }
 
 /**
@@ -28,118 +17,61 @@ async function getDirectors() {
  * @param {Number} id
  * @return {Object} empty or Director model object
  */
-async function getDirector(id) {
-    var response = {
-        status: 404,
-        text: {
-            message: "The item does not exist",
-        },
-    };
+async function getDirector(id, name, surname) {
+  let where = {};
+  if (id) {
+    where.id = id;
+  } else if (name && surname) {
+    (where.name = name), (where.surname = surname);
+  } else {
+    throw new Error("missing parameter");
+  }
 
-    const director = await DirectorModel.findOne({
-        where: {
-            id: id,
-        },
-    });
+  const director = await DirectorModel.findOne({
+    where: where,
+  });
 
-    if (director != null) {
-        response.status = 200;
-
-        return { response, director };
-    }
-
-    return { response };
+  return director;
 }
 
 async function insertDirector(director) {
-    var response = {
-        status: 400,
-        text: {
-            message: "Validation errors in your request",
-        },
-    };
+  const newDirector = await DirectorModel.create(director);
 
-    var result = await DirectorModel.findOne({
-        where: {
-            name: director.name,
-            surname: director.surname,
-            gender: director.gender,
-            age: director.age,
-            maritalStatus: director.maritalStatus,
-        },
-    });
-
-    if (!result) {
-        result = await DirectorModel.create(director);
-
-        response.status = 201;
-        response.text = {
-            message: "The item was created successfully",
-        };
-    }
-
-    return response;
+  return newDirector;
 }
 
 async function deleteDirector(id) {
-    var response = {
-        status: 404,
-        text: {
-            message: "The item does not exist",
-        },
-    };
+  const result = await DirectorModel.destroy({
+    where: {
+      id: id,
+    },
+  });
 
-    var result = await DirectorModel.findByPk(id);
-
-    if (result) {
-        result = await DirectorModel.destroy({
-            where: {
-                id: id,
-            },
-        });
-
-        response.status = 204;
-        response.text.message = "The item is deleted";
-    }
-
-    return response;
+  return result;
 }
 
 async function updateDirector(director) {
-    var response = {
-        status: 404,
-        text: {
-            message: "The item does not exist",
-        },
-    };
+  var id = director.id;
 
-    if (director.id) {
-        var id = director.id;
+  if (!id) {
+    throw new Error("id is required");
+  }
 
-        var result = await DirectorModel.findByPk(id);
+  let existingDirector = await DirectorModel.findByPk(id);
 
-        if (result) {
-            await DirectorModel.update(director, {
-                where: {
-                    id: id,
-                },
-            });
+  if (!existingDirector) {
+    throw new Error(`director with id:${id} is not found`);
+  }
 
-            response.status = 200;
-            response.director = director;
+  await DirectorModel.update(director, {
+    where: {
+      id: id,
+    },
+  });
 
-            return { response, director };
-        }
-    } else {
-        response.status = 400;
-        response.text.message = "Validation errors in your request";
-        response.text.error = {
-            message: "id should be specified",
-            field: "id",
-        };
+  const updatedDirector = await DirectorModel.findOne({ where: { id: id } });
 
-        return { response };
-    }
+  return updatedDirector;
 }
 
 module.exports.getDirectors = getDirectors;
