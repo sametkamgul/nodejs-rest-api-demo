@@ -1,17 +1,22 @@
 # Node.js REST API Example
 
 From now on, you can add all your favorite directors to your own special database!
-  <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f3a5.png?v8" width="30" title="hover text">
-  <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f47b.png?v8" width="30" title="hover text">
+<img src="https://github.githubassets.com/images/icons/emoji/unicode/1f3a5.png?v8" width="30" title="hover text">
+<img src="https://github.githubassets.com/images/icons/emoji/unicode/1f47b.png?v8" width="30" title="hover text">
 
+## technologies
+
+- postgresql
+- express.js
+- kerevizlog: my personal project [here](https://www.npmjs.com/package/kerevizlog)
 
 ## endpoints
 
--   GET /api/v1/director - returns all director
--   GET /api/v1/director/:id - returns the specific director
--   POST /api/v1/director - creates a new director
--   PUT /api/v1/director/:id - updates existing director. Director data should be placed on the request body
--   DELETE /api/v1/director/:id - deletes the specified director
+- GET /api/v1/director - returns all director
+- GET /api/v1/director/:id - returns the specific director
+- POST /api/v1/director - creates a new director
+- PUT /api/v1/director/:id - updates existing director. Director data should be placed on the request body
+- DELETE /api/v1/director/:id - deletes the specified director
 
 ## sample /api/v1/director response
 
@@ -76,5 +81,4 @@ npm run dev
 
 ## TODOs - implementations
 
--   Redis will be developed for caching.
--   Unit tests will be developed
+- Unit tests will be developed
