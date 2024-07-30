@@ -4,8 +4,9 @@ const router = express.Router();
 
 const directorController = require("../controller/directorController");
 const { logging } = require("../middleware/logger");
+const authentication = require("../middleware/authentication");
 
-router.get("/", logging, async (req, res) => {
+router.get("/", authentication, logging, async (req, res) => {
   try {
     const directors = await directorController.getDirectors();
 
@@ -15,7 +16,7 @@ router.get("/", logging, async (req, res) => {
   }
 });
 
-router.get("/:id", logging, async (req, res) => {
+router.get("/:id", authentication, logging, async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -31,7 +32,7 @@ router.get("/:id", logging, async (req, res) => {
   }
 });
 
-router.post("/", logging, async (req, res) => {
+router.post("/", authentication, logging, async (req, res) => {
   directorParams = req.body;
 
   try {
@@ -53,7 +54,7 @@ router.post("/", logging, async (req, res) => {
   }
 });
 
-router.delete("/:id", logging, async (req, res) => {
+router.delete("/:id", authentication, logging, async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -70,7 +71,7 @@ router.delete("/:id", logging, async (req, res) => {
   }
 });
 
-router.put("/", logging, async (req, res) => {
+router.put("/", authentication, logging, async (req, res) => {
   const director = req.body;
 
   try {

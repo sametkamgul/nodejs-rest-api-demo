@@ -1,23 +1,29 @@
 const { Sequelize } = require("sequelize");
-var kerevizlog = require("kerevizlog");
+const kerevizlog = require("kerevizlog");
+require("dotenv").config();
 
-var kLogger = new kerevizlog();
+const kLogger = new kerevizlog();
 
-const sequelize = new Sequelize("director", "sametkamgul", "123", {
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
     dialect: "postgres",
-    host: "localhost",
-    port: "5432",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     logging: false,
-});
+  }
+);
 
 async function init() {
-    try {
-        await sequelize.authenticate();
+  try {
+    await sequelize.authenticate();
 
-        kLogger.info("connected to database");
-    } catch (error) {
-        kLogger.info("error on connection to database!", error);
-    }
+    kLogger.info("connected to database");
+  } catch (error) {
+    kLogger.info("error on connection to database!", error);
+  }
 }
 
 module.exports.sequelize = sequelize;

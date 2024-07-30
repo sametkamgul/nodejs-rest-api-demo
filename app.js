@@ -1,23 +1,27 @@
-var express = require("express");
-var kerevizlog = require("kerevizlog");
+const express = require("express");
+const kerevizlog = require("kerevizlog");
 
-var app = new express(express.json());
-var kLogger = new kerevizlog();
+const app = new express(express.json());
+const kLogger = new kerevizlog();
 
-var director = require("./routes/director");
+const director = require("./routes/director");
+const token = require("./routes/token");
+const user = require("./routes/user");
 
-var connection = require("./helper/connection");
+const connection = require("./helper/connection");
 
 app.use(express.json()); // parsing json in put/post requests
 
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // db connection initialization
 connection.init();
 
 // director rest api endpoint
 app.use("/api/v1/director/", director);
+app.use("/api/v1/token/", token);
+app.use("/api/v1/user/", user);
 
 app.listen(PORT, () => {
-    kLogger.info(`listening on PORT:${PORT}`);
+  kLogger.info(`listening on PORT:${PORT}`);
 });

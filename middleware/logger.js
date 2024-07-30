@@ -1,15 +1,14 @@
-var express = require("express");
-var kerevizlog = require("kerevizlog");
+const express = require("express");
+const kerevizlog = require("kerevizlog");
 
-var express = new express();
-var kLogger = new kerevizlog();
+const kLogger = new kerevizlog();
 
 logging = (req, res, next) => {
-    kLogger.info(
-        `${req.method} Request on: ${req.baseUrl}, from ip: ${req.socket.remoteAddress}`
-    );
+  kLogger.info(
+    `${req.method} Request on: ${req.baseUrl}, from ip: ${req.socket.remoteAddress}`
+  );
 
-    next();
+  next();
 };
 
 module.exports.logging = logging;

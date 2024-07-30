@@ -1,4 +1,4 @@
-var DirectorModel = require("../model/Director");
+const DirectorModel = require("../model/Director");
 
 /**
  * returns all directors
@@ -51,7 +51,7 @@ async function deleteDirector(id) {
 }
 
 async function updateDirector(director) {
-  var id = director.id;
+  const id = director.id;
 
   if (!id) {
     throw new Error("id is required");
