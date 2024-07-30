@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const { logging } = require("../middleware/logger");
-const { getUser } = require("../controller/userController");
+const { getUser } = require("../service/userService");
 
 const router = express.Router();
 
