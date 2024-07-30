@@ -8,6 +8,7 @@ From now on, you can add all your favorite directors to your own special databas
 
 - postgresql
 - express.js
+- tokenization
 - kerevizlog: my personal project [here](https://www.npmjs.com/package/kerevizlog)
 
 ## endpoints
