@@ -12,11 +12,51 @@ From now on, you can add all your favorite directors to your own special databas
 
 ## endpoints
 
+- POST /api/v1/user - register a user
+- POST /api/v1/token - retrieve a token for a user
 - GET /api/v1/director - returns all director
 - GET /api/v1/director/:id - returns the specific director
 - POST /api/v1/director - creates a new director
 - PUT /api/v1/director/:id - updates existing director. Director data should be placed on the request body
 - DELETE /api/v1/director/:id - deletes the specified director
+
+## POST /api/v1/user response for already registered
+
+```JSON
+{
+    "user": {
+        "id": 5,
+        "username": "sametk",
+        "password": "$2b$10$F4dE6Sqp2AaizfhpvlxoeOsfanuqFBSPySNrZlVN2S70wMpS9ooAy",
+        "createdAt": "2024-07-30T18:33:47.460Z",
+        "updatedAt": "2024-07-30T18:33:47.460Z"
+    },
+    "error": true,
+    "message": "user is already registered"
+}
+```
+
+## POST /api/v1/user response for new registration
+
+```JSON
+{
+    "user": {
+        "id": 5,
+        "username": "sametk",
+        "password": "$2b$10$F4dE6Sqp2AaizfhpvlxoeOsfanuqFBSPySNrZlVN2S70wMpS9ooAy",
+        "createdAt": "2024-07-30T18:33:47.460Z",
+        "updatedAt": "2024-07-30T18:33:47.460Z"
+    }
+}s
+```
+
+## POST /api/v1/token response
+
+```JSON
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbWV0IiwicGFzc3dvcmQiOiJiYXJyIiwiaWF0IjoxNzIyMzY0Nzg2LCJleHAiOjE3MjIzNjgzODZ9.TFKIPQRxWin4UU9158imudPfWD70zDxTRiJXRmH650U"
+}
+```
 
 ## sample /api/v1/director response
 
@@ -53,6 +93,20 @@ From now on, you can add all your favorite directors to your own special databas
         "updatedAt": "2023-02-20T21:02:57.000Z"
     }
 ]
+```
+
+## example environment variables
+
+```
+DB_NAME=director
+DB_HOST=localhost
+DB_USER=sametkamgul
+DB_PASS=123
+DB_PORT=5432
+TOKEN_SECRET=samet
+SALT_ROUNDS=10
+TEST_USER_EMAIL=foo.bar@mail.com
+TEST_USER_PASSWORD=bar
 ```
 
 ## package installation
